@@ -1,5 +1,8 @@
 import { CinematicHero } from '@/components/ui/cinematic-landing-hero'
 import { LanguageToggle } from '@/components/LanguageToggle'
+import { Gallery } from '@/components/Gallery'
+import { Stats } from '@/components/Stats'
+import { Footer } from '@/components/Footer'
 import { useI18n } from '@/lib/i18n'
 import { INSTAGRAM_URL, whatsappLink } from '@/lib/site'
 
@@ -45,7 +48,7 @@ const CONTENT = {
 } as const
 
 export default function App() {
-  const { lang } = useI18n()
+  const { lang, t } = useI18n()
   const c = CONTENT[lang]
 
   const whatsappMessage =
@@ -55,20 +58,37 @@ export default function App() {
 
   return (
     <>
-      {/* Minimal fixed overlay: brand mark + language toggle */}
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-[60] flex items-center justify-between px-5 py-5 sm:px-8">
-        <a
-          href="#"
-          className="pointer-events-auto font-display text-sm font-semibold tracking-tightest text-bone/90 mix-blend-difference"
-          aria-label="Four O's Timepieces"
-        >
-          Four O&rsquo;s <span className="text-muted">Timepieces</span>
-        </a>
-        <LanguageToggle className="pointer-events-auto mix-blend-difference" />
+      {/* Minimal fixed overlay nav — legible over the shifting cinematic bg */}
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-[60] mix-blend-difference">
+        <div className="container-editorial flex items-center justify-between py-5">
+          <a
+            href="#top"
+            className="pointer-events-auto font-display text-sm font-semibold tracking-tightest text-bone"
+            aria-label="Four O's Timepieces"
+          >
+            Four O&rsquo;s <span className="opacity-60">Timepieces</span>
+          </a>
+          <nav className="pointer-events-auto flex items-center gap-5 sm:gap-7">
+            <a
+              href="#galeria"
+              className="link-underline font-body text-[11px] uppercase tracking-[0.2em] text-bone/90 hover:text-bone"
+            >
+              {t.navInventory}
+            </a>
+            <a
+              href="#contacto"
+              className="link-underline hidden font-body text-[11px] uppercase tracking-[0.2em] text-bone/90 hover:text-bone sm:inline-flex"
+            >
+              {t.navContact}
+            </a>
+            <LanguageToggle />
+          </nav>
+        </div>
       </header>
 
       <main>
         <CinematicHero
+          id="top"
           brandName="FOUR O'S"
           tagline1="Turning Time,"
           tagline2="into Legacy."
@@ -84,7 +104,12 @@ export default function App() {
           secondaryLabel="Instagram"
           secondaryHref={INSTAGRAM_URL}
           badges={[...c.badges]}
+          inventoryLabel={t.viewInventory}
+          inventoryHref="#galeria"
         />
+        <Gallery />
+        <Stats />
+        <Footer />
       </main>
     </>
   )

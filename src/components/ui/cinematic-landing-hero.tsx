@@ -204,6 +204,9 @@ export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement>
   secondaryLabel?: string
   secondaryHref?: string
   badges?: { title: string; sub: string }[]
+  /** Hero "scroll to inventory" CTA. */
+  inventoryLabel?: string
+  inventoryHref?: string
 }
 
 export function CinematicHero({
@@ -231,6 +234,8 @@ export function CinematicHero({
     { title: 'Authenticated', sub: 'Verified in full' },
     { title: 'Full Set', sub: 'Provenance documented' },
   ],
+  inventoryLabel = 'View inventory',
+  inventoryHref = '#galeria',
   className,
   ...props
 }: CinematicHeroProps) {
@@ -322,7 +327,7 @@ export function CinematicHero({
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=7000',
+          end: '+=5600',
           pin: true,
           scrub: 1,
           anticipatePin: 1,
@@ -345,10 +350,10 @@ export function CinematicHero({
         .fromTo('.floating-badge', { y: 100, autoAlpha: 0, scale: 0.7, rotationZ: -10 }, { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: 'back.out(1.5)', duration: 1.5, stagger: 0.2 }, '-=2.0')
         .fromTo('.card-left-text', { x: -50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'power4.out', duration: 1.5 }, '-=1.5')
         .fromTo('.card-right-text', { x: 50, autoAlpha: 0, scale: 0.8 }, { x: 0, autoAlpha: 1, scale: 1, ease: 'expo.out', duration: 1.5 }, '<')
-        .to({}, { duration: 2.5 })
+        .to({}, { duration: 1.6 })
         .set('.hero-text-wrapper', { autoAlpha: 0 })
         .set('.cta-wrapper', { autoAlpha: 1 })
-        .to({}, { duration: 1.5 })
+        .to({}, { duration: 1.2 })
         .to(['.mockup-scroll-wrapper', '.floating-badge', '.card-left-text', '.card-right-text'], {
           scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: 'power3.in', duration: 1.2, stagger: 0.05,
         })
@@ -383,12 +388,22 @@ export function CinematicHero({
 
       {/* BACKGROUND LAYER: hero taglines */}
       <div className="hero-text-wrapper transform-style-3d absolute z-10 flex w-screen flex-col items-center justify-center px-4 text-center will-change-transform">
-        <h1 className="text-track gsap-reveal text-3d-matte mb-2 font-display text-5xl font-bold tracking-tight md:text-7xl lg:text-[6rem]">
+        {/* Generous leading + bottom padding so Fraunces ascenders/descenders
+            (and the gold background-clip) never get cropped. */}
+        <h1 className="text-track gsap-reveal text-3d-matte mb-1 pb-[0.08em] font-display text-[2.75rem] font-bold leading-[1.08] tracking-tight md:text-7xl lg:text-[6rem]">
           {tagline1}
         </h1>
-        <h1 className="text-days gsap-reveal text-gold-matte font-display text-5xl font-black italic tracking-tighter md:text-7xl lg:text-[6rem]">
+        <h1 className="text-days gsap-reveal text-gold-matte pb-[0.16em] font-display text-[2.75rem] font-black italic leading-[1.14] tracking-tighter md:text-7xl lg:text-[6rem]">
           {tagline2}
         </h1>
+
+        <a
+          href={inventoryHref}
+          className="group pointer-events-auto mt-9 inline-flex items-center gap-3 border border-gold/40 px-6 py-3 font-body text-[12px] uppercase tracking-[0.2em] text-bone transition-colors duration-300 ease-out hover:border-gold hover:text-gold-light focus:outline-none focus:ring-1 focus:ring-gold"
+        >
+          {inventoryLabel}
+          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" aria-hidden="true" />
+        </a>
       </div>
 
       {/* BACKGROUND LAYER 2: CTA — WhatsApp + Instagram */}
@@ -435,7 +450,7 @@ export function CinematicHero({
           <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-evenly px-4 py-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:py-0 lg:px-12">
             {/* TOP (mobile) / RIGHT (desktop): brand name */}
             <div className="card-right-text gsap-reveal z-20 order-1 flex w-full justify-center lg:order-3 lg:justify-end">
-              <h2 className="text-card-matte font-display text-6xl font-black uppercase tracking-tighter md:text-[6rem] lg:text-[8rem]">
+              <h2 className="text-card-matte pb-[0.08em] font-display text-6xl font-black uppercase leading-[1.02] tracking-tighter md:text-[6rem] lg:text-[8rem]">
                 {brandName}
               </h2>
             </div>

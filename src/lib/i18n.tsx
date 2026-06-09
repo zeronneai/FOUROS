@@ -10,10 +10,37 @@ import {
 
 export type Lang = 'es' | 'en'
 
+// Small UI label set (section copy lives in the components themselves).
+const UI = {
+  es: {
+    navInventory: 'Inventario',
+    navContact: 'Contacto',
+    reserve: 'Reservar pieza',
+    viewInventory: 'Ver inventario',
+    available: 'Disponible',
+    sold: 'SOLD',
+    inquire: 'Consultar',
+    consult: 'Consultar por WhatsApp',
+  },
+  en: {
+    navInventory: 'Inventory',
+    navContact: 'Contact',
+    reserve: 'Reserve a piece',
+    viewInventory: 'View inventory',
+    available: 'Available',
+    sold: 'SOLD',
+    inquire: 'Inquire',
+    consult: 'Ask on WhatsApp',
+  },
+} as const
+
+export type UILabels = (typeof UI)[Lang]
+
 interface I18nContext {
   lang: Lang
   setLang: (l: Lang) => void
   toggle: () => void
+  t: UILabels
 }
 
 const Ctx = createContext<I18nContext | null>(null)
@@ -41,7 +68,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const setLang = useCallback((l: Lang) => setLangState(l), [])
   const toggle = useCallback(() => setLangState((p) => (p === 'es' ? 'en' : 'es')), [])
 
-  const value = useMemo<I18nContext>(() => ({ lang, setLang, toggle }), [lang, setLang, toggle])
+  const value = useMemo<I18nContext>(
+    () => ({ lang, setLang, toggle, t: UI[lang] }),
+    [lang, setLang, toggle],
+  )
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

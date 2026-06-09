@@ -31,19 +31,39 @@ Other scripts: `npm run build`, `npm run preview`, `npm run typecheck`.
 > timeline. Under `prefers-reduced-motion` the pinning is skipped and a static,
 > legible layout is shown instead.
 
-## Project structure (shadcn-style)
+## Page structure
+
+The landing flows: **cinematic hero → gallery → stats → contact/footer**.
+The hero pins and plays its timeline, then releases into the editorial content.
+Every section carries an eyebrow + 1px hairline and ends by inviting the next
+action (no dead-ends).
 
 ```
 src/
-  App.tsx                              # composes the hero + bilingual content
+  App.tsx                              # fixed nav + section composition + bilingual copy
   components/
-    ui/cinematic-landing-hero.tsx      # the cinematic component (the deliverable)
+    ui/cinematic-landing-hero.tsx      # the cinematic hero (View inventory CTA → #galeria)
+    Gallery.tsx                        # asymmetric model grid + category filters + WhatsApp
+    Stats.tsx                          # subtle count-up stats strip
+    Footer.tsx                         # closing CTA (#contacto) + footer
     LanguageToggle.tsx                 # ES / EN switch
+    primitives.tsx                     # Eyebrow / Hairline / Reveal / Monogram
+  data/inventory.ts                    # pieces (brand, status, tags, span), stats, filters
+  hooks/useInView.ts                   # IntersectionObserver reveal (reduced-motion safe)
   lib/
     utils.ts                           # cn() — clsx + tailwind-merge
-    i18n.tsx                           # language provider (browser default → ES)
+    i18n.tsx                           # language provider + UI labels (browser default → ES)
     site.ts                            # WhatsApp / Instagram links + brand consts
 ```
+
+### Gallery
+
+`Gallery.tsx` is the intuitive heart of the page: an asymmetric editorial grid
+(no uniform shadowed cards), category filters (`Todos · Rolex · Cartier ·
+New Arrivals · SOLD`), Disponible / SOLD status badges, slow hover zoom, and a
+per-piece **Consultar por WhatsApp** link that opens the chat pre-filled with
+the model. Pieces, filters and stats are data-driven in `src/data/inventory.ts`;
+swap `/public/gallery/*` for real Instagram photos (keep the filenames).
 
 > **Why `components/ui`?** It's the shadcn convention: a predictable home for
 > reusable, copy-pasted UI primitives that the `@/components/ui/*` import alias
