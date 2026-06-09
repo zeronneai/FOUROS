@@ -4,7 +4,7 @@
 import React, { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowDown, ArrowRight, BadgeCheck, ShieldCheck } from 'lucide-react'
+import { ArrowRight, BadgeCheck, ShieldCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 if (typeof window !== 'undefined') {
@@ -204,9 +204,6 @@ export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement>
   secondaryLabel?: string
   secondaryHref?: string
   badges?: { title: string; sub: string }[]
-  /** Hero "scroll to inventory" CTA. */
-  inventoryLabel?: string
-  inventoryHref?: string
 }
 
 export function CinematicHero({
@@ -234,8 +231,6 @@ export function CinematicHero({
     { title: 'Authenticated', sub: 'Verified in full' },
     { title: 'Full Set', sub: 'Provenance documented' },
   ],
-  inventoryLabel = 'View inventory',
-  inventoryHref = '#galeria',
   className,
   ...props
 }: CinematicHeroProps) {
@@ -396,25 +391,6 @@ export function CinematicHero({
         <h1 className="text-days gsap-reveal text-gold-matte pb-[0.24em] font-display text-[2.75rem] font-black italic leading-[1.2] tracking-tighter md:text-7xl lg:text-[6rem]">
           {tagline2}
         </h1>
-
-        <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:gap-5">
-          <a
-            href={inventoryHref}
-            className="group pointer-events-auto inline-flex w-full items-center justify-center gap-3 border border-gold/40 px-6 py-3 font-body text-[12px] uppercase tracking-[0.2em] text-bone transition-colors duration-300 ease-out hover:border-gold hover:text-gold-light focus:outline-none focus:ring-1 focus:ring-gold sm:w-auto"
-          >
-            {inventoryLabel}
-            <ArrowDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" aria-hidden="true" />
-          </a>
-          <a
-            href={primaryHref}
-            target="_blank"
-            rel="noreferrer"
-            className="group pointer-events-auto inline-flex w-full items-center justify-center gap-3 border border-hairline px-6 py-3 font-body text-[12px] uppercase tracking-[0.2em] text-muted transition-colors duration-300 ease-out hover:border-gold/50 hover:text-bone sm:w-auto"
-          >
-            <WhatsAppGlyph className="h-4 w-4" />
-            {primaryLabel}
-          </a>
-        </div>
       </div>
 
       {/* BACKGROUND LAYER 2: CTA — WhatsApp + Instagram */}

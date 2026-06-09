@@ -1,5 +1,7 @@
+import { useEffect, useRef, useState } from 'react'
 import { CinematicHero } from '@/components/ui/cinematic-landing-hero'
 import { Nav } from '@/components/Nav'
+import { ScrollCue } from '@/components/ScrollCue'
 import { Gallery } from '@/components/Gallery'
 import { Stats } from '@/components/Stats'
 import { Footer } from '@/components/Footer'
@@ -48,8 +50,35 @@ const CONTENT = {
 } as const
 
 export default function App() {
-  const { lang, t } = useI18n()
+  const { lang } = useI18n()
   const c = CONTENT[lang]
+
+  // The nav + section UI stay hidden until the cinematic scroll finishes.
+  // A sentinel placed right after the pinned hero tells us when we've arrived.
+  const [revealed, setRevealed] = useState(false)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) {
+      setRevealed(true)
+      return
+    }
+    const onScroll = () => {
+      const el = sentinelRef.current
+      if (!el) return
+      // Reveal once the gallery boundary reaches ~60% up the viewport;
+      // hide again if the visitor scrolls back into the cinematic.
+      setRevealed(el.getBoundingClientRect().top <= window.innerHeight * 0.6)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
 
   const whatsappMessage =
     lang === 'es'
@@ -58,7 +87,11 @@ export default function App() {
 
   return (
     <>
-      <Nav />
+      <Nav revealed={revealed} />
+
+      {/* Always-present, subtle scroll cue → keeps the intro clean */}
+      <ScrollCue revealed={revealed} />
+
       <main>
         {/* Cinematic hero — title + "Curation, redefined" watch card reveal on scroll */}
         <CinematicHero
@@ -78,9 +111,11 @@ export default function App() {
           secondaryLabel="Instagram"
           secondaryHref={INSTAGRAM_URL}
           badges={[...c.badges]}
-          inventoryLabel={t.viewInventory}
-          inventoryHref="#galeria"
         />
+
+        {/* Boundary sentinel: marks the end of the cinematic */}
+        <div ref={sentinelRef} aria-hidden="true" className="h-px w-full" />
+
         <Gallery />
         <Stats />
         <Footer />

@@ -31,13 +31,18 @@ plays its scroll timeline (title → "Curation, redefined" watch card → CTA), 
 releases into the editorial content. Every section below carries an eyebrow +
 1px hairline and ends by inviting the next action.
 
+The intro stays intentionally clean: the **nav and all buttons stay hidden
+until the cinematic scroll finishes** (a sentinel after the pinned hero flips
+`revealed`), and only a single subtle, always-present **View collection** scroll
+cue (`ScrollCue`) invites the visitor down.
+
 ```
 src/
-  App.tsx                              # section composition + bilingual hero copy
+  App.tsx                              # composition + reveal state + bilingual hero copy
   components/
-    Nav.tsx                            # fixed nav, blur-on-scroll, smooth-scroll anchors
-    ui/cinematic-landing-hero.tsx      # GSAP cinematic hero (title + watch card +
-                                       #   CTA), "Ver colección" → #galeria
+    Nav.tsx                            # fixed nav (hidden until cinematic done), anchors
+    ScrollCue.tsx                      # always-present subtle "View collection" cue
+    ui/cinematic-landing-hero.tsx      # GSAP cinematic hero (title + watch card + CTA)
     Gallery.tsx                        # editorial masonry + filters + WhatsApp per piece
     Stats.tsx                          # subtle count-up stats strip
     Footer.tsx                         # closing CTA (#contacto) + footer

@@ -4,7 +4,7 @@ import { whatsappLink } from '@/lib/site'
 import { Monogram } from '@/components/primitives'
 import { LanguageToggle } from '@/components/LanguageToggle'
 
-export function Nav() {
+export function Nav({ revealed = true }: { revealed?: boolean }) {
   const { lang, t } = useI18n()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
@@ -24,7 +24,9 @@ export function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-[60] transition-colors duration-500 ${
+      className={`fixed inset-x-0 top-0 z-[60] transition-[transform,opacity,background-color,border-color] duration-700 ease-out ${
+        revealed ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-full opacity-0'
+      } ${
         scrolled ? 'border-b border-hairline bg-ink/80 backdrop-blur-md' : 'border-b border-transparent bg-transparent'
       }`}
     >
