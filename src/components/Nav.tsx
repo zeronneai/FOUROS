@@ -17,8 +17,8 @@ export function Nav() {
   }, [])
 
   const links = [
+    { href: '#top', label: lang === 'es' ? 'Curaduría' : 'Curation' },
     { href: '#galeria', label: lang === 'es' ? 'Colección' : 'Collection' },
-    { href: '#curaduria', label: lang === 'es' ? 'Curaduría' : 'Curation' },
     { href: '#contacto', label: t.navContact },
   ]
 

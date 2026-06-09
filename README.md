@@ -26,26 +26,30 @@ Other scripts: `npm run build`, `npm run preview`, `npm run typecheck`.
 
 ## Page structure
 
-`Nav → Hero → Curation card → Gallery → Stats → Contact/Footer`. Every section
-carries an eyebrow + 1px hairline and ends by inviting the next action.
+`Nav → Cinematic hero → Gallery → Stats → Contact/Footer`. The GSAP-pinned hero
+plays its scroll timeline (title → "Curation, redefined" watch card → CTA), then
+releases into the editorial content. Every section below carries an eyebrow +
+1px hairline and ends by inviting the next action.
 
 ```
 src/
-  App.tsx                    # section composition
+  App.tsx                              # section composition + bilingual hero copy
   components/
-    Nav.tsx                  # fixed nav, blur-on-scroll, anchors (Colección/Curaduría/Contacto)
-    Hero.tsx                 # title (masked line reveal), CTAs, scroll cue
-    CurationCard.tsx         # the "Curation, redefined" watch card (steel case,
-                             #   gold bezel, in-view counter/ring, mouse tilt, badges)
-    Gallery.tsx              # editorial masonry + category filters + WhatsApp per piece
-    Stats.tsx                # subtle count-up stats strip
-    Footer.tsx               # closing CTA (#contacto) + footer
-    LanguageToggle.tsx       # ES / EN switch
-    primitives.tsx           # Eyebrow / Hairline / Reveal / LineReveal / Monogram
-  data/inventory.ts          # pieces (brand, status, tags, span), stats, filters
-  hooks/useInView.ts         # IntersectionObserver reveal (reduced-motion safe)
-  lib/{utils,i18n,site}.ts   # cn(), language provider + labels, WhatsApp/IG links
+    Nav.tsx                            # fixed nav, blur-on-scroll, smooth-scroll anchors
+    ui/cinematic-landing-hero.tsx      # GSAP cinematic hero (title + watch card +
+                                       #   CTA), "Ver colección" → #galeria
+    Gallery.tsx                        # editorial masonry + filters + WhatsApp per piece
+    Stats.tsx                          # subtle count-up stats strip
+    Footer.tsx                         # closing CTA (#contacto) + footer
+    LanguageToggle.tsx                 # ES / EN switch
+    primitives.tsx                     # Eyebrow / Hairline / Reveal / Monogram
+  data/inventory.ts                    # pieces (brand, status, tags, span), stats, filters
+  hooks/useInView.ts                   # IntersectionObserver reveal (reduced-motion safe)
+  lib/{utils,i18n,site}.ts             # cn(), language provider + labels, WhatsApp/IG links
 ```
+
+The hero pins and consumes ~5600px of scroll to play the full timeline; under
+`prefers-reduced-motion` the pin is skipped and a static layout is shown.
 
 ### Gallery
 
