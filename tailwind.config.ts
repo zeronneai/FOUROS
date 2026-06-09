@@ -7,6 +7,10 @@ export default {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
+      // shadcn-style semantic tokens (CSS vars) — consumed by ui/ components.
+      background: 'var(--color-background)',
+      foreground: 'var(--color-foreground)',
+      'muted-foreground': 'var(--color-muted-foreground)',
       ink: '#0A0A0B', // base background, ink black
       charcoal: '#141416', // raised panels
       hairline: '#2A2A2C', // 1px editorial rules
@@ -28,6 +32,10 @@ export default {
       fontFamily: {
         display: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
         body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
+      scale: {
+        '85': '0.85',
       },
       letterSpacing: {
         tightest: '-0.02em',

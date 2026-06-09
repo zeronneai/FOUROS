@@ -1,89 +1,100 @@
-# Four O&rsquo;s Timepieces — Landing
+# Four O&rsquo;s Timepieces — Cinematic Landing
 
 Curaduría de relojes de lujo · _Turning Time into Legacy_.
-Single-page, mobile-first landing for **@four_os_timepieces** — lead capture
-straight to WhatsApp, with an optional Supabase-backed form. Bilingüe ES/EN.
+A single, full-screen **cinematic scroll experience** for **@four_os_timepieces** —
+a GSAP-driven pinned timeline that flies a charcoal "card" into view, reveals a
+luxury-watch mockup, counts up a stat, and resolves into WhatsApp / Instagram
+CTAs. Bilingüe ES/EN.
 
 ## Stack
 
 - **React + Vite + TypeScript**
-- **Tailwind CSS** with a custom design-token palette (no stock blues/grays)
-- **Framer Motion** — scroll reveals, parallax, masked headline lines
-- **Lenis** — global smooth scroll (auto-disabled under `prefers-reduced-motion`)
-- **Supabase** (optional) — lead persistence; otherwise the form hands off to WhatsApp
+- **Tailwind CSS** with a custom design-token palette (no stock blues/grays) +
+  shadcn-style semantic tokens (`background` / `foreground` / `muted-foreground`)
+- **GSAP + ScrollTrigger** — the cinematic pinned timeline, mouse-tilt and sheen
+- **lucide-react** — UI icons (brand glyphs for WhatsApp/Instagram are inline SVG,
+  since lucide ships no brand icons)
+- shadcn-style structure: `@/*` path alias, `@/lib/utils` `cn()` helper,
+  components under `src/components/ui/`
 
 ## Getting started
 
 ```bash
 npm install
-cp .env.example .env   # fill in the values you need (all optional for local dev)
+cp .env.example .env   # optional — sensible fallbacks if unset
 npm run dev            # http://localhost:5173
 ```
 
 Other scripts: `npm run build`, `npm run preview`, `npm run typecheck`.
 
-## Configuration (`.env`)
+> The hero pins the page and consumes ~7000px of scroll to play the full
+> timeline. Under `prefers-reduced-motion` the pinning is skipped and a static,
+> legible layout is shown instead.
 
-Everything is optional — the site runs with sensible fallbacks.
-
-| Variable | Purpose |
-| --- | --- |
-| `VITE_WHATSAPP_NUMBER` | WhatsApp number, international format, digits only (`15551234567`). |
-| `VITE_INSTAGRAM_HANDLE` | Instagram handle without the `@`. |
-| `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` | Enable the Supabase contact form. If unset, the form opens WhatsApp with the lead prefilled. |
-
-Supabase table expected by the form:
-
-```sql
-create table leads (
-  id uuid primary key default gen_random_uuid(),
-  created_at timestamptz default now(),
-  name text, piece text, contact text, lang text
-);
-```
-
-## Replacing the placeholder images
-
-All imagery lives in **`public/placeholders/`** as labeled SVG stand-ins.
-Swap them for real photos from Instagram — keep the same filenames, or update
-the paths in `src/data/inventory.ts` and `src/components/Hero.tsx`.
-
-| File | Used by | Suggested crop |
-| --- | --- | --- |
-| `hero.svg` | Hero background | Tall, cinematic macro (or drop in a `<video>` loop in `Hero.tsx`) |
-| `piece-01…06.svg` | New-arrivals grid | Mixed: `3:4`, square, `16:10` (see `span` in `inventory.ts`) |
-| `sold-01…05.svg` | Sold wall | Square |
-
-Inventory copy, references and the asymmetric grid weights are all data-driven
-in `src/data/inventory.ts`.
-
-## Editing copy / translations
-
-All ES/EN strings live in one dictionary: `src/lib/i18n.tsx`. The language
-toggle defaults to the browser language (falling back to Spanish) for the
-El Paso / Juárez border market, and persists the choice to `localStorage`.
-
-## Design system
-
-Tokens are defined in `tailwind.config.ts`:
-
-- **Background** `#0A0A0B` ink · panels `#141416` charcoal
-- **Text** `#F5F2EC` bone · secondary `#8A857B` muted
-- **Accent** champagne gold gradient `#E8C887 → #B8923F` — used only on the
-  brand, hairlines and micro-details (never as a full button fill)
-- **Sunset signature** (logo rose→orange→amber) — reserved for the animated
-  monogram ring only
-- **Display** Fraunces (600–900) · **UI/body** Inter with tight tracking
-- 1px hairline rules (`#2A2A2C`), near-zero border radius
-
-## Structure
+## Project structure (shadcn-style)
 
 ```
 src/
-  App.tsx                 # section composition + Lenis
-  components/             # Nav, Hero, Curaduria, Manifiesto, Services,
-                          # Authenticity, SocialProof, Contact, Footer …
-  data/inventory.ts       # pieces, sold wall, testimonials
-  hooks/                  # useLenis, useScrolled
-  lib/                    # i18n, supabase, site config, motion variants
+  App.tsx                              # composes the hero + bilingual content
+  components/
+    ui/cinematic-landing-hero.tsx      # the cinematic component (the deliverable)
+    LanguageToggle.tsx                 # ES / EN switch
+  lib/
+    utils.ts                           # cn() — clsx + tailwind-merge
+    i18n.tsx                           # language provider (browser default → ES)
+    site.ts                            # WhatsApp / Instagram links + brand consts
 ```
+
+> **Why `components/ui`?** It's the shadcn convention: a predictable home for
+> reusable, copy-pasted UI primitives that the `@/components/ui/*` import alias
+> and tooling expect. Keeping the cinematic hero there means future shadcn
+> components drop in alongside it without restructuring.
+
+## The cinematic hero
+
+`<CinematicHero />` is fully prop-driven, so the same component can be re-themed.
+`App.tsx` feeds it Four O&rsquo;s content (ES/EN via the language toggle):
+
+| Prop | Purpose |
+| --- | --- |
+| `brandName` | Large brand word inside the card + watch applique (`FOUR O'S`). |
+| `tagline1` / `tagline2` | Hero lines. `tagline2` renders in the signature gold gradient. |
+| `cardHeading` / `cardDescription` | Curation copy beside the watch. |
+| `metricValue` / `metricLabel` | The sub-dial counter that animates up (e.g. _Pieces placed_). |
+| `dateLabel` | The watch date window. |
+| `ctaHeading` / `ctaDescription` | The closing call-to-action. |
+| `primaryHref` / `secondaryHref` + labels | WhatsApp + Instagram CTAs. |
+| `badges` | The two floating glass badges (Authenticated / Full Set). |
+
+### Brand adaptation vs. the source component
+
+The component started as a sobriety-app hero (deep-blue card, iPhone mockup,
+App Store / Google Play). It was adapted to the Four O&rsquo;s design system:
+
+- Deep blue `#162C6D` → **charcoal** card with a fine gold hairline
+- iPhone app UI → a **luxury watch** (steel case, gold bezel ring, animated
+  seconds track repurposed from the original progress ring, 10:10 hands,
+  sub-dial counter, date window)
+- App Store / Google Play → **WhatsApp + Instagram** outline CTAs (gold edge,
+  never a gold fill)
+- Emoji badges → **lucide icons** (ShieldCheck / BadgeCheck)
+- Gold kept disciplined: signature lines, hairlines, bezel and seconds track only
+
+## Configuration (`.env`)
+
+All optional — the site runs with fallbacks.
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_WHATSAPP_NUMBER` | WhatsApp number, international format, digits only (`15551234567`). **Set this** or the CTAs point nowhere. |
+| `VITE_INSTAGRAM_HANDLE` | Instagram handle without the `@`. |
+
+## Design tokens
+
+Defined in `tailwind.config.ts` (and CSS vars in `src/index.css`):
+
+- **Background** `#0A0A0B` ink · panels `#141416` charcoal
+- **Text** `#F5F2EC` bone · secondary `#8A857B` muted
+- **Accent** champagne gold gradient `#E8C887 → #B8923F` — brand, hairlines,
+  micro-details only (never a full button fill)
+- **Display** Fraunces (variable, 400–900) · **UI/body** Inter, tight tracking
