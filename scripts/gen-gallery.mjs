@@ -54,7 +54,8 @@ function svg({ w, h, label, sub }) {
 </svg>`
 }
 
-const ASPECT = { tall: [600, 800], wide: [1000, 620], regular: [600, 600] }
+// 3:4, 4:5 and 1:1 — vertical-friendly so the masonry grid reads full.
+const ASPECT = { tall: [720, 960], wide: [760, 760], regular: [720, 900] }
 
 const pieces = [
   ['rolex-datejust-41', 'Rolex Datejust 41', 'tall'],

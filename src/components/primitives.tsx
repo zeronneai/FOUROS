@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import { useInView } from '@/hooks/useInView'
 
@@ -41,6 +41,49 @@ export function Reveal({
     >
       {children}
     </div>
+  )
+}
+
+/**
+ * Masked single-line reveal: the (transparent) wrapper clips with overflow,
+ * while an INNER element slides up — so the glyphs themselves are never cut.
+ * Bottom padding leaves room for descenders (g, y) at rest. Reduced-motion safe.
+ */
+export function LineReveal({
+  children,
+  delay = 0,
+  gold = false,
+  className = '',
+}: {
+  children: ReactNode
+  delay?: number
+  gold?: boolean
+  className?: string
+}) {
+  const [shown, setShown] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+
+  useEffect(() => {
+    if (shown) return
+    const id = requestAnimationFrame(() => setShown(true))
+    return () => cancelAnimationFrame(id)
+  }, [shown])
+
+  return (
+    <span className="block overflow-hidden bg-transparent pb-[0.02em]">
+      <span
+        className={cn(
+          'block pb-[0.18em] leading-[1.15] will-change-transform transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)]',
+          shown ? 'translate-y-0' : 'translate-y-[115%]',
+          gold && 'text-gold-gradient',
+          className,
+        )}
+        style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      >
+        {children}
+      </span>
+    </span>
   )
 }
 

@@ -5,15 +5,11 @@ import { whatsappLink } from '@/lib/site'
 import { FILTERS, INVENTORY, type Category, type Piece } from '@/data/inventory'
 import { Eyebrow, Hairline, Reveal } from '@/components/primitives'
 
-const SPAN: Record<Piece['span'], string> = {
-  tall: 'lg:col-span-4',
-  wide: 'col-span-2 lg:col-span-8',
-  regular: 'lg:col-span-4',
-}
+// Varied aspect ratios drive the magazine rhythm inside the masonry columns.
 const ASPECT: Record<Piece['span'], string> = {
   tall: 'aspect-[3/4]',
-  wide: 'aspect-[16/10]',
-  regular: 'aspect-square',
+  regular: 'aspect-[4/5]',
+  wide: 'aspect-square',
 }
 
 function WhatsAppGlyph({ className }: { className?: string }) {
@@ -50,7 +46,7 @@ function PieceCard({ piece, index }: { piece: Piece; index: number }) {
       : `Hi, I'm interested in the ${piece.brand} ${piece.model}${piece.ref ? ` (${piece.ref})` : ''}.`
 
   return (
-    <Reveal className={SPAN[piece.span]} delay={(index % 3) * 70}>
+    <Reveal className="mb-5 break-inside-avoid" delay={(index % 3) * 70}>
       <div className="group flex h-full flex-col">
         <a
           href={whatsappLink(inquiry)}
@@ -116,16 +112,16 @@ export function Gallery() {
   const copy =
     lang === 'es'
       ? {
-          eyebrow: 'La galería',
-          title: 'Modelos en curaduría',
+          eyebrow: 'La colección',
+          title: 'Piezas en curaduría',
           intro:
             'El corazón de la colección. Piezas seleccionadas a mano — disponibles y vendidas — con precio bajo consulta.',
           closing: '¿No ves la referencia que buscas? La conseguimos.',
           closingCta: 'Pedir una pieza específica',
         }
       : {
-          eyebrow: 'The gallery',
-          title: 'Models under curation',
+          eyebrow: 'The collection',
+          title: 'Pieces under curation',
           intro:
             'The heart of the collection. Hand-selected pieces — available and sold — with price on request.',
           closing: "Don't see the reference you want? We'll source it.",
@@ -173,8 +169,8 @@ export function Gallery() {
 
         <Hairline className="my-10" />
 
-        {/* Asymmetric grid */}
-        <div className="grid auto-rows-min grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-12">
+        {/* Asymmetric editorial masonry — varied heights, magazine rhythm */}
+        <div className="columns-2 gap-5 lg:columns-3">
           {pieces.map((piece, i) => (
             <PieceCard key={piece.id} piece={piece} index={i} />
           ))}

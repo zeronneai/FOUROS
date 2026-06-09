@@ -1,5 +1,5 @@
 export type PieceStatus = 'available' | 'sold'
-export type Category = 'all' | 'rolex' | 'cartier' | 'new' | 'sold'
+export type Category = 'all' | 'rolex' | 'cartier' | 'patek' | 'new' | 'sold'
 
 export interface Piece {
   id: string
@@ -61,10 +61,10 @@ export const INVENTORY: Piece[] = [
     ref: 'Ref. 5711/1A',
     year: '2019',
     status: 'sold',
-    tags: ['sold'],
+    tags: ['patek', 'sold'],
     note: { es: 'Pieza de colección.', en: 'Collector grade.' },
     image: '/gallery/patek-nautilus.svg',
-    span: 'regular',
+    span: 'tall',
   },
   {
     id: 'ap-royal-oak',
@@ -145,6 +145,7 @@ export const FILTERS: { key: Category; label: { es: string; en: string } }[] = [
   { key: 'all', label: { es: 'Todos', en: 'All' } },
   { key: 'rolex', label: { es: 'Rolex', en: 'Rolex' } },
   { key: 'cartier', label: { es: 'Cartier', en: 'Cartier' } },
+  { key: 'patek', label: { es: 'Patek', en: 'Patek' } },
   { key: 'new', label: { es: 'New Arrivals', en: 'New Arrivals' } },
   { key: 'sold', label: { es: 'SOLD', en: 'SOLD' } },
 ]
