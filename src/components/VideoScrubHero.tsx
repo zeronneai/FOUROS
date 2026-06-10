@@ -10,6 +10,11 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
+// The clip starts with the watch in pieces; scrolling down assembles it
+// (forward scrub, climax = assembled). If the real footage runs the other way,
+// flip this to true and the scrub plays from the end backward.
+const REVERSE_SCRUB = false
+
 /**
  * Scroll-sequenced video hero (Locomotive / sequence-scroll pattern).
  * The watch footage is scrubbed by scroll while three short type beats
@@ -26,16 +31,16 @@ export function VideoScrubHero(props: HTMLAttributes<HTMLElement>) {
     lang === 'es'
       ? {
           eyebrow: "Four O's Timepieces",
-          b1: 'Desarmado hasta el último componente.',
+          b1: 'Inspeccionado hasta el último componente.',
           b2: 'Verificado hasta el último detalle.',
-          c1: 'Rearmado como legado.',
+          c1: 'Armado como legado.',
           buy: 'Comprar. Vender. Intercambiar.',
         }
       : {
           eyebrow: "Four O's Timepieces",
-          b1: 'Disassembled to the last component.',
+          b1: 'Inspected to the last component.',
           b2: 'Verified to the last detail.',
-          c1: 'Reassembled as legacy.',
+          c1: 'Assembled into legacy.',
           buy: 'Buy. Sell. Trade.',
         }
 
@@ -92,7 +97,12 @@ export function VideoScrubHero(props: HTMLAttributes<HTMLElement>) {
       })
 
       // Scrub the footage across the whole pin (timeline spans 3 units).
-      tl.to(video, { currentTime: dur, duration: 3 }, 0)
+      if (REVERSE_SCRUB) {
+        video.currentTime = dur
+        tl.fromTo(video, { currentTime: dur }, { currentTime: 0, duration: 3 }, 0)
+      } else {
+        tl.to(video, { currentTime: dur, duration: 3 }, 0)
+      }
       // Beat A (assembled) holds, then lifts away.
       tl.to('.vsh-a', { autoAlpha: 0, y: -36, duration: 0.45, ease: 'power2.in' }, 0.85)
       // Beat B (in pieces).
