@@ -1,7 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL, whatsappLink } from '@/lib/site'
-import { Eyebrow, Monogram, Reveal } from '@/components/primitives'
+import { Monogram, Reveal } from '@/components/primitives'
 
 export function Footer() {
   const { lang } = useI18n()
@@ -39,8 +39,7 @@ export function Footer() {
       {/* Closing CTA */}
       <div className="container-editorial py-20 lg:py-[120px]">
         <Reveal>
-          <Eyebrow gold>{copy.eyebrow}</Eyebrow>
-          <h2 className="mt-4 max-w-2xl text-balance font-display text-[clamp(2.25rem,7vw,5rem)] font-[650] leading-[1.02] tracking-tightest text-bone">
+          <h2 className="max-w-2xl text-balance font-display text-[clamp(2.25rem,7vw,5rem)] font-[650] leading-[1.02] tracking-tightest text-bone">
             {copy.title}
           </h2>
           <p className="mt-6 max-w-md text-pretty font-body text-[15px] leading-relaxed tracking-tighter text-muted">

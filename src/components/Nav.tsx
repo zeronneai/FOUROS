@@ -17,7 +17,7 @@ export function Nav({ revealed = true }: { revealed?: boolean }) {
   }, [])
 
   const links = [
-    { href: '#top', label: lang === 'es' ? 'Curaduría' : 'Curation' },
+    { href: '#manifiesto', label: lang === 'es' ? 'Curaduría' : 'Curation' },
     { href: '#galeria', label: lang === 'es' ? 'Colección' : 'Collection' },
     { href: '#contacto', label: t.navContact },
   ]

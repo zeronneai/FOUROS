@@ -53,7 +53,7 @@ function PieceCard({ piece, index }: { piece: Piece; index: number }) {
           target="_blank"
           rel="noreferrer"
           className={`relative block overflow-hidden border border-hairline bg-charcoal ${ASPECT[piece.span]}`}
-          aria-label={`${piece.brand} ${piece.model} — ${t.inquire}`}
+          aria-label={`${piece.brand} ${piece.model}, ${t.inquire}`}
         >
           <img
             src={piece.image}
@@ -115,7 +115,7 @@ export function Gallery() {
           eyebrow: 'La colección',
           title: 'Piezas en curaduría',
           intro:
-            'El corazón de la colección. Piezas seleccionadas a mano — disponibles y vendidas — con precio bajo consulta.',
+            'El corazón de la colección. Piezas seleccionadas a mano, disponibles y vendidas, con precio bajo consulta.',
           closing: '¿No ves la referencia que buscas? La conseguimos.',
           closingCta: 'Pedir una pieza específica',
         }
@@ -123,7 +123,7 @@ export function Gallery() {
           eyebrow: 'The collection',
           title: 'Pieces under curation',
           intro:
-            'The heart of the collection. Hand-selected pieces — available and sold — with price on request.',
+            'The heart of the collection. Hand-selected pieces, available and sold, with price on request.',
           closing: "Don't see the reference you want? We'll source it.",
           closingCta: 'Request a specific piece',
         }
