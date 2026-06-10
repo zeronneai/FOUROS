@@ -1,7 +1,7 @@
-import { ArrowUpRight } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
-import { INSTAGRAM_HANDLE, INSTAGRAM_URL, whatsappLink } from '@/lib/site'
+import { INSTAGRAM_DM_URL, INSTAGRAM_HANDLE, INSTAGRAM_URL } from '@/lib/site'
 import { Monogram, Reveal } from '@/components/primitives'
+import { InstagramGlyph } from '@/components/icons'
 
 export function Footer() {
   const { lang } = useI18n()
@@ -13,7 +13,7 @@ export function Footer() {
           eyebrow: 'El siguiente paso',
           title: 'Asegura tu próxima pieza',
           body: 'La mayoría de las piezas se reservan por mensaje directo. Escríbenos y conversamos en privado.',
-          whatsapp: 'Escribir por WhatsApp',
+          whatsapp: 'Send DM',
           instagram: 'Seguir en Instagram',
           rights: 'Todos los derechos reservados.',
           disclaimer:
@@ -23,16 +23,11 @@ export function Footer() {
           eyebrow: 'The next step',
           title: 'Secure your next piece',
           body: 'Most pieces are reserved by direct message. Write to us and we talk in private.',
-          whatsapp: 'Message on WhatsApp',
+          whatsapp: 'Send DM',
           instagram: 'Follow on Instagram',
           rights: 'All rights reserved.',
           disclaimer: 'Independent dealer. Not affiliated with the watch brands mentioned.',
         }
-
-  const reserveMsg =
-    lang === 'es'
-      ? 'Hola, me gustaría reservar una pieza.'
-      : "Hi, I'd like to reserve a piece."
 
   return (
     <footer id="contacto" className="scroll-mt-20 border-t border-hairline bg-ink">
@@ -47,13 +42,13 @@ export function Footer() {
           </p>
           <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center">
             <a
-              href={whatsappLink(reserveMsg)}
+              href={INSTAGRAM_DM_URL}
               target="_blank"
-              rel="noreferrer"
-              className="group inline-flex items-center justify-center gap-3 border border-gold/40 px-6 py-3.5 font-body text-[12px] uppercase tracking-[0.2em] text-bone transition-colors duration-300 hover:border-gold hover:text-gold-light"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 border border-gold/40 px-6 py-3.5 font-body text-[12px] uppercase tracking-[0.2em] text-bone transition-colors duration-300 hover:border-gold hover:text-gold-light"
             >
+              <InstagramGlyph className="h-4 w-4" />
               {copy.whatsapp}
-              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
             </a>
             <a
               href={INSTAGRAM_URL}
@@ -80,8 +75,8 @@ export function Footer() {
             <a href="#galeria" className="link-underline font-body text-[13px] tracking-tighter text-muted hover:text-bone">
               {lang === 'es' ? 'Inventario' : 'Inventory'}
             </a>
-            <a href={whatsappLink()} target="_blank" rel="noreferrer" className="link-underline font-body text-[13px] tracking-tighter text-muted hover:text-bone">
-              WhatsApp
+            <a href={INSTAGRAM_DM_URL} target="_blank" rel="noopener noreferrer" className="link-underline font-body text-[13px] tracking-tighter text-muted hover:text-bone">
+              Send DM
             </a>
             <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="link-underline font-body text-[13px] tracking-tighter text-muted hover:text-bone">
               @{INSTAGRAM_HANDLE}

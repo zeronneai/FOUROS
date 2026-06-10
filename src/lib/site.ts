@@ -6,6 +6,9 @@ export const INSTAGRAM_HANDLE =
 
 export const INSTAGRAM_URL = `https://instagram.com/${INSTAGRAM_HANDLE}`
 
+// Primary contact channel: open the Instagram profile to DM, new tab.
+export const INSTAGRAM_DM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}/`
+
 // Digits only, international format, no '+' or spaces.
 export const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER ?? '15555555555'
 

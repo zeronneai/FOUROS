@@ -4,7 +4,8 @@ import { useEffect, useRef, useState, type HTMLAttributes } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useI18n } from '@/lib/i18n'
-import { whatsappLink } from '@/lib/site'
+import { INSTAGRAM_DM_URL } from '@/lib/site'
+import { InstagramGlyph } from '@/components/icons'
 import {
   HERO_MEDIA,
   SEQUENCE_FRAME_COUNT,
@@ -385,8 +386,9 @@ export function SequenceHero({ onCueHide, ...props }: SequenceHeroProps) {
         <a href="#galeria" className="cta-gold">
           {t.viewInventory}
         </a>
-        <a href={whatsappLink()} target="_blank" rel="noreferrer" className="cta-ghost">
-          WhatsApp
+        <a href={INSTAGRAM_DM_URL} target="_blank" rel="noopener noreferrer" className="cta-ghost">
+          <InstagramGlyph className="h-4 w-4" />
+          Send DM
         </a>
       </div>
     </div>

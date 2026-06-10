@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from '@/lib/i18n'
-import { whatsappLink } from '@/lib/site'
+import { INSTAGRAM_DM_URL } from '@/lib/site'
 import { Monogram } from '@/components/primitives'
+import { InstagramGlyph } from '@/components/icons'
 
 export function Nav({ revealed = true }: { revealed?: boolean }) {
   const { lang, t } = useI18n()
@@ -52,12 +53,13 @@ export function Nav({ revealed = true }: { revealed?: boolean }) {
 
         <div className="flex items-center gap-5">
           <a
-            href={whatsappLink(lang === 'es' ? 'Hola, me gustaría reservar una pieza.' : "Hi, I'd like to reserve a piece.")}
+            href={INSTAGRAM_DM_URL}
             target="_blank"
-            rel="noreferrer"
-            className="hidden border border-gold/40 px-4 py-2 font-body text-[11px] uppercase tracking-[0.18em] text-bone transition-colors duration-300 hover:border-gold hover:text-gold-light sm:inline-block"
+            rel="noopener noreferrer"
+            className="hidden items-center gap-2 border border-gold/40 px-4 py-2 font-body text-[11px] uppercase tracking-[0.18em] text-bone transition-colors duration-300 hover:border-gold hover:text-gold-light sm:inline-flex"
           >
-            {t.reserve}
+            <InstagramGlyph className="h-3.5 w-3.5" />
+            Send DM
           </a>
 
           {/* Mobile toggle */}
@@ -94,13 +96,14 @@ export function Nav({ revealed = true }: { revealed?: boolean }) {
             </a>
           ))}
           <a
-            href={whatsappLink(lang === 'es' ? 'Hola, me gustaría reservar una pieza.' : "Hi, I'd like to reserve a piece.")}
+            href={INSTAGRAM_DM_URL}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             onClick={() => setOpen(false)}
-            className="mt-4 inline-block w-fit border border-gold/40 px-5 py-2.5 font-body text-[11px] uppercase tracking-[0.18em] text-gold-light"
+            className="mt-4 inline-flex w-fit items-center gap-2 border border-gold/40 px-5 py-2.5 font-body text-[11px] uppercase tracking-[0.18em] text-gold-light"
           >
-            {t.reserve}
+            <InstagramGlyph className="h-3.5 w-3.5" />
+            Send DM
           </a>
         </div>
       </div>
