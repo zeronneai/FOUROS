@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useI18n } from '@/lib/i18n'
 import { whatsappLink } from '@/lib/site'
 import { Monogram } from '@/components/primitives'
-import { LanguageToggle } from '@/components/LanguageToggle'
 
 export function Nav({ revealed = true }: { revealed?: boolean }) {
   const { lang, t } = useI18n()
@@ -52,7 +51,6 @@ export function Nav({ revealed = true }: { revealed?: boolean }) {
         </nav>
 
         <div className="flex items-center gap-5">
-          <LanguageToggle />
           <a
             href={whatsappLink(lang === 'es' ? 'Hola, me gustaría reservar una pieza.' : "Hi, I'd like to reserve a piece.")}
             target="_blank"

@@ -61,6 +61,46 @@
     @apply bg-gold-text bg-clip-text text-transparent;
   }
 
+  /* Local vignette behind hero overlay copy — a soft radial pool, not a box.
+     The element must already be positioned (the hero beats are). */
+  .beat-scrim::before {
+    content: '';
+    position: absolute;
+    inset: -2.75rem -4rem;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(10, 10, 11, 0.55) 0%,
+      rgba(10, 10, 11, 0.3) 45%,
+      transparent 72%
+    );
+    filter: blur(26px);
+  }
+
+  /* Soft halo + tight contact shadow so copy reads over bright watch parts. */
+  .text-legible {
+    text-shadow:
+      0 2px 24px rgba(0, 0, 0, 0.8),
+      0 1px 4px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Brightens the gold gradient and rims it with a warm glow so it separates
+     from the gilded movement behind it. (drop-shadow, not text-shadow: the
+     gradient text is transparent and text-shadow would bleed through it.) */
+  .gold-glow {
+    filter: brightness(1.07) drop-shadow(0 2px 14px rgba(0, 0, 0, 0.75))
+      drop-shadow(0 0 26px rgba(232, 200, 135, 0.3));
+  }
+
+  /* Hero CTAs: gold-filled primary and ghost secondary pills. */
+  .cta-gold {
+    @apply inline-flex items-center gap-2 border border-gold/50 bg-gold/15 px-6 py-3 font-body text-[11px] uppercase tracking-[0.2em] text-bone backdrop-blur-md transition-colors duration-300 hover:border-gold hover:text-gold-light;
+  }
+  .cta-ghost {
+    @apply inline-flex items-center gap-2 border border-bone/20 bg-ink/40 px-6 py-3 font-body text-[11px] uppercase tracking-[0.2em] text-bone/80 backdrop-blur-md transition-colors duration-300 hover:border-bone/50 hover:text-bone;
+  }
+
   /* Animated underline for editorial links/buttons */
   .link-underline {
     @apply relative inline-flex items-center;

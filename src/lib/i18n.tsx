@@ -45,20 +45,11 @@ interface I18nContext {
 
 const Ctx = createContext<I18nContext | null>(null)
 
-function detectLang(): Lang {
-  if (typeof navigator === 'undefined') return 'es'
-  const stored = localStorage.getItem('fo_lang') as Lang | null
-  if (stored === 'es' || stored === 'en') return stored
-  // Border market (El Paso / Juárez): follow the browser, fall back to Spanish.
-  return navigator.language?.toLowerCase().startsWith('en') ? 'en' : 'es'
-}
-
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>('es')
-
-  useEffect(() => {
-    setLangState(detectLang())
-  }, [])
+  // The site currently ships English-only: browser/localStorage detection is
+  // bypassed and the nav selector is unmounted, but the provider, labels and
+  // toggle stay wired so ES can be reactivated later.
+  const [lang, setLangState] = useState<Lang>('en')
 
   useEffect(() => {
     document.documentElement.lang = lang

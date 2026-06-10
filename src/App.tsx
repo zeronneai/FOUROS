@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { VideoScrubHero } from '@/components/VideoScrubHero'
+import { SequenceHero } from '@/components/SequenceHero'
 import { Nav } from '@/components/Nav'
 import { ScrollCue } from '@/components/ScrollCue'
 import { Manifesto } from '@/components/Manifesto'
@@ -11,12 +11,15 @@ export default function App() {
   // Nav + UI stay hidden until the scroll-sequenced hero finishes.
   // A sentinel placed right after the pinned hero tells us when we've arrived.
   const [revealed, setRevealed] = useState(false)
+  // The persistent scroll cue hides once the hero climax shows its own CTAs.
+  const [cueHidden, setCueHidden] = useState(false)
   const sentinelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced) {
       setRevealed(true)
+      setCueHidden(true) // static hero already shows "View collection"
       return
     }
     const onScroll = () => {
@@ -36,11 +39,11 @@ export default function App() {
   return (
     <>
       <Nav revealed={revealed} />
-      <ScrollCue revealed={revealed} />
+      <ScrollCue revealed={revealed} hidden={cueHidden} />
 
       <main>
-        {/* Scroll-sequenced video hero: the watch assembles as you scroll */}
-        <VideoScrubHero id="top" />
+        {/* Canvas frame-sequence hero: logo → watch → exploded view */}
+        <SequenceHero id="top" onCueHide={setCueHidden} />
 
         {/* Boundary sentinel: marks the end of the cinematic hero */}
         <div ref={sentinelRef} aria-hidden="true" className="h-px w-full" />

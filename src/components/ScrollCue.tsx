@@ -7,14 +7,23 @@ import { useI18n } from '@/lib/i18n'
  * through the whole page. The "scroll to explore" hint shows during the intro
  * and fades once the cinematic is done; the pill itself stays at all times.
  */
-export function ScrollCue({ revealed = false }: { revealed?: boolean }) {
+export function ScrollCue({
+  revealed = false,
+  hidden = false,
+}: {
+  revealed?: boolean
+  /** Fades the whole cue out (hero climax shows its own "View collection"). */
+  hidden?: boolean
+}) {
   const { lang, t } = useI18n()
   const hint = lang === 'es' ? 'Desliza para explorar' : 'Scroll to explore'
 
   return (
     <a
       href="#galeria"
-      className="group fixed bottom-6 left-1/2 z-[55] flex -translate-x-1/2 flex-col items-center gap-2.5"
+      className={`group fixed bottom-6 left-1/2 z-[55] flex -translate-x-1/2 flex-col items-center gap-2.5 transition-opacity duration-500 ${
+        hidden ? 'pointer-events-none opacity-0' : 'opacity-100'
+      }`}
       aria-label={t.viewInventory}
     >
       <span

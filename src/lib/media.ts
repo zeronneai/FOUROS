@@ -1,15 +1,24 @@
-// Hero footage (the watch disassembling / reassembling). Served from Cloudinary
-// — it loads in the visitor's browser, so the build sandbox never needs it.
-// Swap this constant to change the clip; `q_auto` lets Cloudinary optimize.
-const CLOUD_BASE = 'https://res.cloudinary.com/dsprn0ew4/video/upload'
-const CLIP = 'v1781101907/WhatsApp_Video_2026-06-10_at_8.31.31_AM_jydqkt'
+// Hero media. The master clip lives in assets/hero-master.mov (logo → watch →
+// exploded view, push-in already baked in). The hero scrubs a pre-extracted
+// frame sequence on a <canvas>; the MP4 below is only a safety net.
+
+/** Frames extracted from the master (ffmpeg, webp q75). Two sizes:
+ *  /sequence (1600px, desktop) and /sequence/sm (720px, mobile). */
+export const SEQUENCE_FRAME_COUNT = 115
+export const SEQUENCE_DIR = '/sequence'
+export const SEQUENCE_DIR_SM = '/sequence/sm'
+
+/** Frames are 1-indexed on disk: frame-001.webp … frame-115.webp. */
+export function sequenceFrameSrc(dir: string, index: number): string {
+  return `${dir}/frame-${String(index + 1).padStart(3, '0')}.webp`
+}
+
+/** Poster (frame 1, the logo) for the <video> fallback and social embeds. */
+export const HERO_POSTER = '/hero-poster.jpg'
 
 /**
- * The watch clip, Cloudinary-optimized (`q_auto`) for a lighter payload and
- * smoother scrubbing. The original (no transform) is `${CLOUD_BASE}/${CLIP}.mp4`
- * if you ever need to bypass optimization.
+ * Lightweight 1080p encode of the master, shown only if the frame sequence
+ * fails to load. Served from /public for now — after uploading
+ * public/hero-fallback.mp4 to Cloudinary, point this at the Cloudinary URL.
  */
-export const HERO_VIDEO_SRC = `${CLOUD_BASE}/q_auto/${CLIP}.mp4`
-
-/** Representative poster for instant paint / LCP and reduced-motion fallback. */
-export const HERO_VIDEO_POSTER = `${CLOUD_BASE}/so_auto,q_auto,f_jpg/${CLIP}.jpg`
+export const HERO_FALLBACK_VIDEO_SRC = '/hero-fallback.mp4'
