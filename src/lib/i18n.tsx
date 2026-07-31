@@ -17,20 +17,12 @@ const UI = {
     navContact: 'Contacto',
     reserve: 'Reservar pieza',
     viewInventory: 'Ver colección',
-    available: 'Disponible',
-    sold: 'SOLD',
-    inquire: 'Consultar',
-    consult: 'Consultar por WhatsApp',
   },
   en: {
     navInventory: 'Inventory',
     navContact: 'Contact',
     reserve: 'Reserve a piece',
     viewInventory: 'View collection',
-    available: 'Available',
-    sold: 'SOLD',
-    inquire: 'Inquire',
-    consult: 'Ask on WhatsApp',
   },
 } as const
 
