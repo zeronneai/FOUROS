@@ -6,6 +6,7 @@ import { Manifesto } from '@/components/Manifesto'
 import { Gallery } from '@/components/Gallery'
 import { Stats } from '@/components/Stats'
 import { Footer } from '@/components/Footer'
+import { LeadModal } from '@/components/LeadModal'
 
 export default function App() {
   // Nav + UI stay hidden until the scroll-sequenced hero finishes.
@@ -53,6 +54,9 @@ export default function App() {
         <Stats />
         <Footer />
       </main>
+
+      {/* Private concierge lead form (auto-opens once, reopenable from nav/gallery) */}
+      <LeadModal />
     </>
   )
 }

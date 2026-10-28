@@ -14,6 +14,7 @@ import {
 } from '@/data/inventory'
 import { Eyebrow, Reveal } from '@/components/primitives'
 import { InstagramGlyph } from '@/components/icons'
+import { openLeadModal } from '@/lib/leads'
 
 const DM_PROPS = { href: INSTAGRAM_DM_URL, target: '_blank', rel: 'noopener noreferrer' } as const
 
@@ -190,13 +191,22 @@ export function Gallery() {
             <p className="max-w-md font-display text-xl tracking-tightest text-bone sm:text-2xl">
               {copy.closing}
             </p>
-            <a
-              {...DM_PROPS}
-              className="group inline-flex shrink-0 items-center gap-3 border border-gold/40 px-6 py-3 font-body text-[12px] uppercase tracking-[0.2em] text-bone transition-colors duration-300 hover:border-gold hover:text-gold-light"
-            >
-              <InstagramGlyph className="h-4 w-4" />
-              {copy.closingCta}
-            </a>
+            <div className="flex shrink-0 flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => openLeadModal('gallery')}
+                className="inline-flex items-center gap-3 border border-gold/60 bg-gold/10 px-6 py-3 font-body text-[12px] uppercase tracking-[0.2em] text-bone transition-colors duration-300 hover:border-gold hover:text-gold-light"
+              >
+                Request a piece
+              </button>
+              <a
+                {...DM_PROPS}
+                className="group inline-flex items-center gap-3 border border-gold/40 px-6 py-3 font-body text-[12px] uppercase tracking-[0.2em] text-bone transition-colors duration-300 hover:border-gold hover:text-gold-light"
+              >
+                <InstagramGlyph className="h-4 w-4" />
+                {copy.closingCta}
+              </a>
+            </div>
           </div>
         </Reveal>
       </div>

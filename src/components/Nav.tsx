@@ -3,6 +3,7 @@ import { useI18n } from '@/lib/i18n'
 import { INSTAGRAM_DM_URL } from '@/lib/site'
 import { Monogram } from '@/components/primitives'
 import { InstagramGlyph } from '@/components/icons'
+import { openLeadModal } from '@/lib/leads'
 
 export function Nav({ revealed = true }: { revealed?: boolean }) {
   const { lang, t } = useI18n()
@@ -52,6 +53,13 @@ export function Nav({ revealed = true }: { revealed?: boolean }) {
         </nav>
 
         <div className="flex items-center gap-5">
+          <button
+            type="button"
+            onClick={() => openLeadModal('nav')}
+            className="link-underline hidden font-body text-[12px] uppercase tracking-[0.2em] text-gold-light transition-colors duration-300 hover:text-bone lg:inline-flex"
+          >
+            Find your piece
+          </button>
           <a
             href={INSTAGRAM_DM_URL}
             target="_blank"
@@ -81,7 +89,7 @@ export function Nav({ revealed = true }: { revealed?: boolean }) {
       {/* Mobile sheet */}
       <div
         className={`overflow-hidden border-t border-hairline bg-ink/95 backdrop-blur-md transition-[max-height,opacity] duration-400 md:hidden ${
-          open ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+          open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <div className="container-editorial flex flex-col py-4">
@@ -95,6 +103,16 @@ export function Nav({ revealed = true }: { revealed?: boolean }) {
               {l.label}
             </a>
           ))}
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false)
+              openLeadModal('nav')
+            }}
+            className="border-b border-hairline py-3 text-left font-display text-xl tracking-tightest text-gold-light"
+          >
+            Find your piece
+          </button>
           <a
             href={INSTAGRAM_DM_URL}
             target="_blank"

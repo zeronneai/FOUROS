@@ -112,6 +112,35 @@
   .link-underline:hover::after {
     @apply origin-left scale-x-100;
   }
+
+  /* Lead modal + admin form controls */
+  .lead-input {
+    @apply block min-h-[48px] w-full rounded-sm border border-hairline bg-ink/60 px-4 font-body text-[16px] text-bone outline-none transition-colors duration-300 placeholder:text-muted/70 focus:border-gold/70;
+  }
+  .lead-chip {
+    @apply min-h-[36px] border border-hairline px-3 font-body text-[12px] tracking-[0.04em] text-bone/75 transition-colors duration-300 hover:border-bone/30 hover:text-bone;
+  }
+  .lead-chip-on {
+    @apply border-gold bg-gold/10 text-bone;
+  }
+  .lead-step {
+    animation: lead-step-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes lead-step-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lead-step {
+      animation: none;
+    }
+  }
 }
 
 @layer utilities {
