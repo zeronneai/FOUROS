@@ -1,22 +1,22 @@
 /**
- * Cloudinary on-the-fly image transforms for the gallery. Inserts a transform
- * segment after `/upload/` so the original URLs stay swappable.
- *
- * The inventory photos are shot 4:5; we lock that ratio (`c_fill,ar_4:5`) to
- * prevent layout shift and let `f_auto,q_auto` pick the lightest crisp format.
+ * Gallery image helpers. The inventory photos live in public/inventory as
+ * pre-rendered 4:5 WebP files at fixed widths (`<base>-<width>.webp`), so the
+ * gallery does not depend on an external image CDN.
  */
-function transform(url: string, width: number): string {
-  return url.replace('/upload/', `/upload/f_auto,q_auto,c_fill,ar_4:5,w_${width}/`)
+const WIDTHS = [520, 760, 1040, 1520] as const
+
+function variant(base: string, width: number): string {
+  return `${base}-${width}.webp`
 }
 
 /** A `src` at a sensible default width. */
-export function cldImage(url: string, width = 760): string {
-  return transform(url, width)
+export function cldImage(base: string, width: (typeof WIDTHS)[number] = 760): string {
+  return variant(base, width)
 }
 
 /** A width-descriptor srcset across the sizes a gallery slot can render at. */
-export function cldSrcSet(url: string): string {
-  return [520, 760, 1040, 1520].map((w) => `${transform(url, w)} ${w}w`).join(', ')
+export function cldSrcSet(base: string): string {
+  return WIDTHS.map((w) => `${variant(base, w)} ${w}w`).join(', ')
 }
 
 /** Matches the gallery grid: ~3-up desktop, 2-up tablet, near-full on phones. */

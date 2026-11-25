@@ -9,7 +9,6 @@ export const SEQUENCE_FRAME_COUNT = 115
 /**
  * Per-orientation assets. Frames are at the masters' native width (never
  * upscaled): lg 1920px (webp q80), pt 1072px (webp q73 to stay ~6MB).
- * After uploading the fallback MP4s to Cloudinary, point `fallback` there.
  */
 export const HERO_MEDIA = {
   landscape: {
